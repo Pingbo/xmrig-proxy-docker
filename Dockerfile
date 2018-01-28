@@ -3,7 +3,6 @@ FROM ubuntu:xenial
 LABEL Name=xmrig-proxy-docker Version=0.0.1
 
 #Variables for configuration
-<<<<<<< HEAD
 ENV RETRIES=5 \
 DONATION=2 \
 POOL_ADDR="pool.etn.spacepools.org" \
@@ -12,16 +11,6 @@ PASSWORD="x" \
 CUSTOM_DIFF=0 \
 BIND_ADDR="0.0.0.0:3333" \
 COIN="xmr"
-=======
-ENV     RETRIES=5
-ENV     DONATION=2
-ENV     POOL_ADDR="pool.etn.spacepools.org"
-ENV     WALLET_ADDR="etnk6o9kxjg2d4eWbtGqUUCpzouAPM2ZnUzfBwXFNPCQUmMQcxcELFZF82NRLoE71YWNxEzTo8z14E9pqTn4oae46pTU6QFVWP"
-ENV     PASSWORD="x"
-ENV     CUSTOM_DIFF=0
-ENV     BIND_ADDR="0.0.0.0:3333"
-ENV     COIN="xmr"
->>>>>>> de6c88fb1213e2298a65f80b9a2ce8d84abd1986
 
 #Installation dependencies
 RUN apt-get update && apt-get install -y \
