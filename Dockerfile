@@ -33,7 +33,7 @@ RUN git clone https://github.com/xmrig/xmrig-proxy.git \
  && mv xmrig-proxy /xmrig-proxy/ \
  && cd ../../ \
  && mkdir /config \
- && mv -n /xmrig-proxy-build/src/config.json /config/
+ && mv /xmrig-proxy-build/src/config.json /config/
 
 #Cleanup
 RUN apt-get purge -y git build-essential cmake \
