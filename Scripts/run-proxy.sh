@@ -1,3 +1,3 @@
 #!/bin/bash
 sh ./config.sh
-/xmrig/xmrig -C /config/config.json
+/xmrig-proxy/xmrig-proxy -C /config/config.json
