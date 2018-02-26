@@ -5,6 +5,7 @@ FROM          ubuntu:latest
 ENV           XMRIG_DIR /xmrig-proxy
 ENV           XMRIG_BUILD_DIR $XMRIG_DIR/build
 
+RUN           apt-get update && apt-get upgrade
 RUN           apt install git build-essential cmake libuv1-dev uuid-dev
 
 RUN           git clone https://github.com/xmrig/xmrig-proxy.git $XMRIG_DIR && cd $XMRIG_DIR
