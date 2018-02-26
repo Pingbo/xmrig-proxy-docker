@@ -1,46 +1,15 @@
+# usage: docker run pingbo/xmrig-proxy -o miningpool.url:port -u username -p password -b 0.0.0.0:3333
 
-FROM ubuntu:xenial
-LABEL Name=xmrig-proxy-docker Version=0.0.1
+FROM          ubuntu:latest
 
-#Variables for configuration
-ENV RETRIES=5 \
-DONATION=2 \
-POOL_ADDR="pool.etn.spacepools.org" \
-WALLET_ADDR="etnk6o9kxjg2d4eWbtGqUUCpzouAPM2ZnUzfBwXFNPCQUmMQcxcELFZF82NRLoE71YWNxEzTo8z14E9pqTn4oae46pTU6QFVWP" \
-PASSWORD="x" \
-CUSTOM_DIFF=0 \
-BIND_ADDR="0.0.0.0:3333" \
-COIN="xmr"
+ENV           XMRIG_DIR /xmrig-proxy
+ENV           XMRIG_BUILD_DIR $XMRIG_DIR/build
 
-#Installation dependencies
-RUN apt-get update && apt-get install -y \
-    git \
-    build-essential \
-    cmake \
-    libuv1-dev \
-    uuid-dev \
-    libmicrohttpd-dev
+RUN           apt install git build-essential cmake libuv1-dev uuid-dev
 
-#Installation
-RUN git clone https://github.com/xmrig/xmrig-proxy.git \
- && mv xmrig-proxy xmrig-proxy-build \
- && cd xmrig-proxy-build \ 
- && mkdir build \ 
- && cd build \
- && cmake .. \ 
- && make \
- && mkdir /xmrig-proxy \
- && mv xmrig-proxy /xmrig-proxy/ \
- && cd ../../ \
- && mkdir /config \
- && mv /xmrig-proxy-build/src/config.json /config/
+RUN           git clone https://github.com/xmrig/xmrig-proxy.git $XMRIG_DIR && cd $XMRIG_DIR
+RUN           mkdir $XMRIG_BUILD_DIR && cd $XMRIG_BUILD_DIR && \
+    cmake .. -DWITH_HTTPD=OFF && make
+RUN           mv $XMRIG_BUILD_DIR/xmrig-proxy /usr/bin/
 
-#Cleanup
-RUN apt-get purge -y git build-essential cmake \
- && rm -rf /var/lib/apt/lists/** \
- && rm -rf xmrig-proxy-build
-
-COPY /Scripts /Scripts
-
-WORKDIR /Scripts
-ENTRYPOINT ["sh ./run-proxy.sh"]
+ENTRYPOINT    ["xmrig-proxy"]
